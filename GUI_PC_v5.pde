@@ -1,17 +1,12 @@
-//import Control P5 library
-import controlP5.*;
-//import 
-import processing.serial.*;
-
-Serial port;
-
-//create Control object 
-ControlP5 cp5;
-PFont font;
-  //-----------------------------------------------------------------
 boolean Midday;
 boolean Evening;
 boolean Night;
+
+import ddf.minim.*;
+Minim minim;
+AudioPlayer playerDay;
+AudioPlayer playerEvening;
+AudioPlayer playerNight;
 
 import gifAnimation.*;    // import the gifAnimation library
 
@@ -19,14 +14,19 @@ Gif middayGif;
 Gif eveningGif;
 Gif nightGif;
 
-  //-----------------------------------------------------------------
 
-//similar setup/code style to that in arduino 
-void setup(){
-  //window size 
-  //size(1800, 1000);
-    //-----------------------------------------------------------------
-  fullScreen();
+//import processing.video.*;
+//Movie myMovie;
+
+
+void setup() {
+  
+  minim = new Minim(this);
+  playerDay = minim.loadFile("Day 1.wav");
+  playerEvening = minim.loadFile("Evening 1.wav");
+  playerNight = minim.loadFile("Night 1.wav");
+  //fullScreen();
+  size(1920,1080);
   Midday = true;
   Evening = false;
   Night = false; 
@@ -42,126 +42,68 @@ void setup(){
   
   nightGif = new Gif(this, "Night_HD.gif");
   nightGif.play();
-  //-----------------------------------------------------------------
-  
-  //prints all available serial ports
-  printArray(Serial.list());
-  
-  //actual port that the ARDUINO is using/connected to  
-  //Will change between Mac & Windows bc life 
-  port = new Serial(this, "COM7", 9600);
-  
-  //buttons 
-  cp5 = new ControlP5(this);
-  
-  //custom fonts for the buttons & title 
-  //can be altered in the future
-  font = createFont("Calibri", 20);
-  
-  //night
-  cp5.addButton("night")
-  .setPosition(width/2,50)
-  .setSize(100,80)
-  .setFont(font)
-  ; 
-  
-   // sunset 
-  cp5.addButton("sunset")
-  .setPosition(width/2,150)
-  .setSize(100,80)
-  .setFont(font)
-  ; 
-  
-   // midday 
-  cp5.addButton("midday")
-  .setPosition(width/2,250)
-  .setSize(100,80)
-  .setFont(font)
-  ; 
-  
-   //all leds off = does not work yet 
-  cp5.addButton("off")
-  .setPosition(width/2,350)
-  .setSize(100,80)
-  .setFont(font)
-  ; 
-  
-  
 }
 
-//similar loop to that in arduino 
 void draw() {
-  
-  ///color of window  in rgb - light blueish 
-  background (95, 178, 205);
-  
-  //title   
-  //title color 
-  fill(255, 255, 255);
-  //tile font change 
-  textFont(font);
-  //title to window & location 
-  text("lofi room", width/2, 30);
-  //-------------------------------------
   if (Midday == true) {
     background(0, 128, 0);
     //image(myMovie, 0, 0);
     image(middayGif,0,0,1920,1080);
+    playerDay.loop();
+    stopEvening();
+    stopNight();
     
   } 
   if (Evening == true) {
     background(128, 0, 0);
     image(eveningGif,0,0,1920,1080);
+    playerEvening.loop();
+    stopDay();
+    stopNight();
     
   } 
   if (Night == true) {
     background(0, 0, 128);
     image(nightGif,0,0,1920,1080);
+    playerNight.loop();
+    stopEvening();
+    stopDay();
     
   } 
   
-  
-}
-
-//functions added functions to buttons & connects char to to the particular serial port 
-void night(){
-  port.write('3');
-}
-
-
-void sunset(){
-  port.write('2');
-}
-
-
-void midday(){
-  port.write('1');
-}
-
-//does not work yet 
-void off(){
-  port.write('0');
 }
 
 void keyPressed(){
   switch(key){
-    case '1': 
-      midday();
-      Midday = true;
-      Evening = false;
-      Night = false;
-      break;
-    case '2': 
-      sunset();
-      Evening = true;
-      Midday = false;
-      Night = false;
-      break;
-    case '3':
-      night();
-      Night = true;
-      Evening = false;
-      Midday = false;
-      break;              
+    case '1': Midday = true;
+              Evening = false;
+              Night = false;
+              break;
+    case '2': Evening = true;
+              Midday = false;
+              Night = false;
+              break;
+    case '3': Night = true;
+              Evening = false;
+              Midday = false;
+              break;              
   }
+}
+
+void stopDay() {
+  playerDay.close();
+  minim.stop();
+  super.stop();
+}
+
+void stopEvening() {
+  playerEvening.close();
+  minim.stop();
+  super.stop();
+}
+
+void stopNight() {
+  playerNight.close();
+  minim.stop();
+  super.stop();
 }
