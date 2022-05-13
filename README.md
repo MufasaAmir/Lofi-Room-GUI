@@ -47,6 +47,7 @@ In addition to the software and animations, I had provided a large portion of th
 Filmed and Edited the Teaser Trailer and Demo Reel.
 - Demo Reel https://www.youtube.com/watch?v=goOuCRF7ID8
 - Teaser Trailer https://drive.google.com/file/d/1FuG4Lpfp5w8SI-PXvnNhHu01mGJLhtDS/view
+- Group Documentation https://angelamedina2.wixsite.com/lofiroom
 
 
 
