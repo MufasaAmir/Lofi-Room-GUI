@@ -21,7 +21,7 @@ Gif nightGif;
 
   //-----------------------------------------------------------------
   
- import Minim; //variables for playing audio
+ import ddf.minim.*; //variables for playing audio
  Minim minim;
  AudioPlayer playerDay;
  AudioPlayer playerEvening;
