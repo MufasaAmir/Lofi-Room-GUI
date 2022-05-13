@@ -37,4 +37,8 @@ In addition to the software and animations, I had provided a large portion of th
 - 2 Extension cords
 - Command Strips/Hooks (Used for mounting the TV to the wall)
 
+# Other Contributions
+- Filmed and Edited both demo reels
+
+
 
