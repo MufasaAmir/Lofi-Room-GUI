@@ -1,0 +1,44 @@
+//This was the first palette for the LED Strip through the Arduino, before incorporating Processing 
+//This was before we had a clear idea of the physical space & our own limited materials
+
+
+//External library to control & built in effects to learn/guide 
+#include <FastLED.h>
+
+//Corresponds to the data pin on the arduino that is connected to the Leds 
+#define DATA_PIN    13
+
+//Define the exact LEDs working with & how many 
+#define NUM_LEDS    20
+#define BRIGHTNESS  64
+#define LED_TYPE    WS2812B
+#define COLOR_ORDER GRB
+
+// Define the array of leds
+CRGB leds[NUM_LEDS];
+
+uint8_t paletteIndex = 0;
+
+
+// using an actual scale that is created here from black (0) to warm white (255)
+//Experimenting with the LED colors & palettes that fit our project's aesthetics 
+//CAN CHANGE TO PRETTY TO SKY
+DEFINE_GRADIENT_PALETTE (heatmap_gp) {
+  //0,   0,   0,   0,     //black
+  //4, 35,   48,   0,   
+  89, 43, 239,   200,  
+  30, 86,  110,   0,
+  //15, 43,  55, 0,
+  //255, 255, 255, 255    //full white
+};
+
+CRGBPalette16 myPalette = heatmap_gp;
+
+void setup() {
+  FastLED.addLeds<LED_TYPE, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS);
+  
+}
+
+void loop() {
+ fill_palette(leds, NUM_LEDS, paletteIndex, 255 / NUM_LEDS, myPalette, BRIGHTNESS, LINEARBLEND);
+ FastLED.show();

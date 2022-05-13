@@ -1,0 +1,128 @@
+//This is the Arduino code that provided the palette information to the LEDs through the Arduino 
+//This was also the first version that successfully connected Arduino to Processing(Processing_LEDStrip_v4) to have a functioning GUI
+//For physical circuit that I used refer to arduino_circuit_diagram.pdf that is also Arduino folder
+
+
+//External library that allows to easily program the LEDs & link attached 
+#include <FastLED.h>
+
+//Corresponds to the data pin on the arduino that is connected to the Leds 
+#define DATA_PIN    13
+
+//Define the exact LEDs working with & how many 
+#define NUM_LEDS    150 * 2
+#define BRIGHTNESS  64
+#define LED_TYPE    WS2812B
+#define COLOR_ORDER GRB
+
+// Define the array of leds
+CRGB leds[NUM_LEDS];
+
+uint8_t paletteIndex = 0;
+
+
+//Using an actual scale that is created here from black (0) to warm white (255)
+//CAN CHANGE TO PRETTY TO SKY
+DEFINE_GRADIENT_PALETTE (night) {
+  //0,   0,   0,   161,     //dark blue (a) 
+  //64, 26,   26,  226,   //lighter blue
+  //128, 143, 156,  220,   // light purple (a)
+  //200, 10, 36,   165,     //mid blue 
+  //255,  6,  0,   105, //dark blue (a)
+
+
+  0,86,   27,  122,   // purple (b)
+  162, 0, 2,   165,     //mid blue (b)
+  255, 255, 192, 203, //pink (b)
+  
+  
+};
+
+
+DEFINE_GRADIENT_PALETTE (day) {
+
+
+ // 0, 26,   26,  226,   //lighter blue
+ 64,  232, 185, 30, // dark yellow (a)
+  //128, 255, 0, 0, // red
+ // 128, 143, 156,  220,   // light purple (a)
+192, 10, 36,   165,     //mid blue (a)
+255, 255, 192, 203, //pink (a)
+ // 255, 232, 185, 30, // dark yellow, //dark blue 
+
+
+
+};
+
+
+DEFINE_GRADIENT_PALETTE (sunset) {
+   //0,   0,   0,   161,     //dark blue
+  0,86,   27,  122,   // purple (a)
+  64,  0, 0, 205, // blue (a)
+  125, 225,140, 0, // orange (a)
+  //128, 143, 156,  220,   // light purple
+//162, 0, 2,   165,     //mid blue 
+ 255, 255, 192, 203, //pink (a)
+
+};
+
+// connect the palettes
+CRGBPalette16 myPalette1 = night;
+
+CRGBPalette16 myPalette2 = day;
+
+CRGBPalette16 myPalette3 = sunset;
+
+
+
+void setup() {
+  FastLED.addLeds<LED_TYPE, DATA_PIN, COLOR_ORDER>(leds, NUM_LEDS);
+
+
+  //serial communication btwn @ 9600 
+  Serial.begin(9600);
+  
+}
+
+void loop() {
+
+//Attaching values that connected to Processing that start the correct palette 
+if (Serial.available()){
+
+  char val = Serial.read();
+
+//night time colors  
+  if (val == 'r'){
+    //run the night led 
+  fill_palette(leds, NUM_LEDS, paletteIndex, 255 / NUM_LEDS, myPalette1, BRIGHTNESS, LINEARBLEND);
+  FastLED.show();
+
+  }
+
+//day time colors
+ if (val == 'b'){
+    //run the night led 
+ fill_palette(leds, NUM_LEDS, paletteIndex, 255 / NUM_LEDS, myPalette2, BRIGHTNESS, LINEARBLEND);
+ FastLED.show();
+
+}
+
+//sunset time colors 
+ if (val == 'y'){
+    //run the night led 
+ fill_palette(leds, NUM_LEDS, paletteIndex, 255 / NUM_LEDS, myPalette3, BRIGHTNESS, LINEARBLEND);
+ FastLED.show();
+
+}
+
+ if (val == 'f') {
+      //turn off all leds
+
+ fill_palette(leds, NUM_LEDS, paletteIndex, 255 / NUM_LEDS, myPalette3, 0 , LINEARBLEND);
+ FastLED.show();
+   
+      
+    } 
+ 
+}
+}
