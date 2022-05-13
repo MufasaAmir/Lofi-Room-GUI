@@ -38,7 +38,9 @@ In addition to the software and animations, I had provided a large portion of th
 - Command Strips/Hooks (Used for mounting the TV to the wall)
 
 # Other Contributions
-- Filmed and Edited both demo reels
+Filmed and Edited the Teaser Trailer and Demo Reel.
+- Demo Reel https://www.youtube.com/watch?v=goOuCRF7ID8
+- Teaser Trailer https://drive.google.com/file/d/1FuG4Lpfp5w8SI-PXvnNhHu01mGJLhtDS/view
 
 
 
