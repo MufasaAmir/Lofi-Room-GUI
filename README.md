@@ -21,6 +21,12 @@ https://github.com/ddf/Minim
 - GifAnimation, used to render gifs instead of videos of the background animations because Processing's video player buffers too much for this project.
 https://github.com/akiljohnson1/GifAnimation
 
+# How to Run
+- Upload Arduino code to the Arduino Board First. If there's an issue, try switching to another available port. 
+- Run the .pde file to initiate the GUI
+- If the GUI is unresponsive to key presses, try clicking on the GUI with the mouse first and press the keys to insure the play window is active.
+
+
 # Animations
 I had created background animations for all three themes using Adobe Photoshop and Premiere Pro.
 - Art assets such as the Mount Fuji pixel art, plane, and clouds where created in Photoshop.
