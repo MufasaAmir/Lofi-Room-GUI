@@ -15,13 +15,13 @@ boolean Night;
 
 import gifAnimation.*;    // import the gifAnimation library
 
-Gif middayGif; 
+Gif middayGif; // animations variables
 Gif eveningGif;
 Gif nightGif;
 
   //-----------------------------------------------------------------
   
- import Minim;
+ import Minim; //variables for playing audio
  Minim minim;
  AudioPlayer playerDay;
  AudioPlayer playerEvening;
@@ -34,17 +34,17 @@ void setup(){
   //size(1800, 1000);
     //-----------------------------------------------------------------
   fullScreen();
-  Midday = true;
+  Midday = true; // setsday time to play by default
   Evening = false;
   Night = false; 
   
   minim = new Minim(this);
   
-  playerDay = loadFile("Day 1.wav");
+  playerDay = loadFile("Day 1.wav"); // initialize audio tracks
   playerEvening = loadFile("Evening 1.wav");
   playerNight = loadFile("Night 1.wav");
   
-  //myMovie = new Movie(this, "._Midday.mp4");
+  //myMovie = new Movie(this, "._Midday.mp4"); //initialize gif animations
   //myMovie.play();
   
   middayGif = new Gif(this, "Midday_HD.gif");
@@ -57,7 +57,7 @@ void setup(){
   nightGif.play();
   //-----------------------------------------------------------------
   
-  //prints all available serial ports
+  //prints all available serial ports //communicate with the arduino board
   printArray(Serial.list());
   
   //actual port that the ARDUINO is using/connected to  
@@ -116,18 +116,18 @@ void draw() {
   //title to window & location 
   text("lofi room", width/2, 30);
   //-------------------------------------
-  if (Midday == true) {
+  if (Midday == true) { //display Day theme animation
     background(0, 128, 0);
     //image(myMovie, 0, 0);
     image(middayGif,0,0,1920,1080);
     
   } 
-  if (Evening == true) {
+  if (Evening == true) { //display evening theme animation
     background(128, 0, 0);
     image(eveningGif,0,0,1920,1080);
     
   } 
-  if (Night == true) {
+  if (Night == true) { // display night theme animation
     background(0, 0, 128);
     image(nightGif,0,0,1920,1080);
     
@@ -158,7 +158,7 @@ void off(){
 
 void keyPressed(){
   switch(key){
-    case '1': 
+    case '1': // play/pause audio tracks when respective themes are turned off/on
       midday();
       Midday = true;
       Evening = false;
