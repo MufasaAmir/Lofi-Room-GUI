@@ -20,6 +20,13 @@ Gif eveningGif;
 Gif nightGif;
 
   //-----------------------------------------------------------------
+  
+ import Minim;
+ Minim minim;
+ AudioPlayer playerDay;
+ AudioPlayer playerEvening;
+ AudioPlayer player Night;
+ 
 
 //similar setup/code style to that in arduino 
 void setup(){
@@ -30,6 +37,12 @@ void setup(){
   Midday = true;
   Evening = false;
   Night = false; 
+  
+  minim = new Minim(this);
+  
+  playerDay = loadFile("Day 1.wav");
+  playerEvening = loadFile("Evening 1.wav");
+  playerNight = loadFile("Night 1.wav");
   
   //myMovie = new Movie(this, "._Midday.mp4");
   //myMovie.play();
@@ -59,32 +72,32 @@ void setup(){
   font = createFont("Calibri", 20);
   
   //night
-  cp5.addButton("night")
-  .setPosition(width/2,50)
-  .setSize(100,80)
-  .setFont(font)
-  ; 
+  //cp5.addButton("night")
+  //.setPosition(width/2,50)
+  //.setSize(100,80)
+  //.setFont(font)
+  //; 
   
    // sunset 
-  cp5.addButton("sunset")
-  .setPosition(width/2,150)
-  .setSize(100,80)
-  .setFont(font)
-  ; 
+  //cp5.addButton("sunset")
+  //.setPosition(width/2,150)
+  //.setSize(100,80)
+  //.setFont(font)
+  //; 
   
    // midday 
-  cp5.addButton("midday")
-  .setPosition(width/2,250)
-  .setSize(100,80)
-  .setFont(font)
-  ; 
+  //cp5.addButton("midday")
+  //.setPosition(width/2,250)
+  //.setSize(100,80)
+  //.setFont(font)
+  //; 
   
    //all leds off = does not work yet 
-  cp5.addButton("off")
-  .setPosition(width/2,350)
-  .setSize(100,80)
-  .setFont(font)
-  ; 
+  //cp5.addButton("off")
+  //.setPosition(width/2,350)
+  //.setSize(100,80)
+  //.setFont(font)
+  //; 
   
   
 }
@@ -150,18 +163,30 @@ void keyPressed(){
       Midday = true;
       Evening = false;
       Night = false;
+      playerDay.loop();
+      playerDay.rewind();
+      playerEvening.pause();
+      playerNight.pause();
       break;
     case '2': 
       sunset();
       Evening = true;
       Midday = false;
       Night = false;
+      playerEvening.loop();
+      playerEvening.rewind();
+      playerDay.pause();
+      playerNight.pause();
       break;
     case '3':
       night();
       Night = true;
       Evening = false;
       Midday = false;
+      playerNight.loop();
+      playerNight.rewind();
+      playerEvening.pause();
+      playerDay.pause();
       break;              
   }
 }
